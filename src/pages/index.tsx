@@ -20,7 +20,7 @@ export default function Home() {
 
   const getICP = async () => {
     setIsLoading(true)
-    const response = await axios.post('/api/getICP', {principal: icpRef.current.value})
+    const response = await axios.post('/api/getICP', {accountId: icpRef.current.value})
     if (response.status === 201) {
       setSuccess(true)
     } else {
