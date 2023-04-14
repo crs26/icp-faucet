@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const icpRef = useRef<any>(null)
-  const cycleRef = useRef(null)
+  const cycleRef = useRef<any>(null)
 
   const [isLoading, setIsLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -21,6 +21,17 @@ export default function Home() {
   const getICP = async () => {
     setIsLoading(true)
     const response = await axios.post('/api/getICP', {principal: icpRef.current.value})
+    if (response.status === 201) {
+      setSuccess(true)
+    } else {
+      setSuccess(false)
+    }
+    setIsLoading(false)
+  }
+
+  const getCycles = async () => {
+    setIsLoading(true)
+    const response = await axios.post('/api/getCycles', {wallet: cycleRef.current.value})
     if (response.status === 201) {
       setSuccess(true)
     } else {
@@ -61,8 +72,8 @@ export default function Home() {
               aria-describedby="basic-addon2"
               ref={cycleRef}
             />
-            <Button className='col-1' variant="outline-success" id="button-addon2">
-              Get Cycles
+            <Button className='col-1' variant="outline-success" id="button-addon2" onClick={getCycles} disabled={isLoading}>
+              {isLoading ? 'Loading' : 'Get Cycles'}
             </Button>
           </InputGroup>
         </div>
