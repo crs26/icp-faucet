@@ -11,10 +11,12 @@ export default async function handler(
     res: NextApiResponse<Data>
 ) {
     if (req.method === 'POST') {
-        const {stdout} = await execa('dfx', ['wallet', 'send', req.body.wallet, '1000000000000'])
-        setTimeout(() => {
+        try {
+            const {stdout} = await execa('dfx', ['wallet', 'send', req.body.wallet, '1000000000000', '--network', 'ic'])
             res.status(201).end()
-        }, 5000);
+        } catch (error) {
+            res.status(400).send(error as Error)
+        }
     } else {
         res.status(400).end()
     }
