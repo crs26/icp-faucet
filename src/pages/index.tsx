@@ -6,6 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import { useRef, useState } from 'react';
 import { FormControlProps } from 'react-bootstrap';
 import axios from 'axios'
+import { Faucet } from '@/components/Faucet';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,10 +18,12 @@ export default function Home() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [activeTab, setActiveTab] = useState('icp')
+  const [errorMsg, setErrorMsg] = useState('')
 
   const getICP = async () => {
     setIsLoading(true)
-    const response = await axios.post('/api/getICP', {accountId: icpRef.current.value})
+    const response = await axios.post('/api/getICP', {accountId: icpRef.current.value}, { validateStatus: () => true })
     if (response.status === 201) {
       setSuccess(true)
     } else {
@@ -31,7 +34,7 @@ export default function Home() {
 
   const getCycles = async () => {
     setIsLoading(true)
-    const response = await axios.post('/api/getCycles', {wallet: cycleRef.current.value})
+    const response = await axios.post('/api/getCycles', {wallet: cycleRef.current.value}, { validateStatus: () => true })
     if (response.status === 201) {
       setSuccess(true)
     } else {
@@ -40,44 +43,31 @@ export default function Home() {
     setIsLoading(false)
   }
 
+
+  const renderFaucet = () => {
+    if (activeTab === 'icp') {
+      return <Faucet inputRef={icpRef} action={getICP} isLoading={isLoading} success={success} placeholder={'Identity Account ID'} status={errorMsg} btnTxt={'Get ICP'}/>
+    } else {
+      return <Faucet inputRef={cycleRef} action={getCycles} isLoading={isLoading} success={success} placeholder={'Wallet Canister ID'} status={errorMsg} btnTxt={'Get Cycles'}/>
+    }
+  }
+
   return (
     <main className="min-h-screen items-center p-24">
-      <div className='row'>
-        <div className='col-12 text-center'>
-          <h1>
-            ICP Faucet
-          </h1>
-          <InputGroup className="mb-3">
-            <Form.Control
-              placeholder="Principal ID"
-              aria-label="Principal ID"
-              aria-describedby="basic-addon2"
-              ref={icpRef}
-            />
-            <Button className='col-1' variant="outline-success" id="button-addon2" onClick={getICP} disabled={isLoading}>
-              {isLoading ? 'Loading' : 'Get ICP'}
-            </Button>
-          </InputGroup>
-        </div>
+      <div className='row text-center'>
+        <h1>Faucet</h1>
       </div>
-      <div className='row'>
-        <div className='col-12 text-center'>
-          <h1>
-            Cycles Faucet
-          </h1>
-          <InputGroup className="mb-3">
-            <Form.Control
-              placeholder="Wallet Canister ID"
-              aria-label="Wallet Canister ID"
-              aria-describedby="basic-addon2"
-              ref={cycleRef}
-            />
-            <Button className='col-1' variant="outline-success" id="button-addon2" onClick={getCycles} disabled={isLoading}>
-              {isLoading ? 'Loading' : 'Get Cycles'}
-            </Button>
-          </InputGroup>
-        </div>
+      <div className='row py-5'>
+        <ul className="nav nav-tabs">
+          <li className="nav-item col-6 text-center">
+            <a className={`nav-link ${activeTab === 'icp' ? 'active' : ''}`} href="#" onClick={() => setActiveTab('icp')}>ICP</a>
+          </li>
+          <li className="nav-item col-6 text-center">
+            <a className={`nav-link ${activeTab === 'cycles' ? 'active' : ''}`} href="#" onClick={() => setActiveTab('cycles')}>Cycles</a>
+          </li>
+        </ul>
       </div>
+      {renderFaucet()}
     </main>
   )
 }
