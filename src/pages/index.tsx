@@ -6,7 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import { useRef, useState } from 'react';
 import { FormControlProps } from 'react-bootstrap';
 import axios from 'axios'
-import { Faucet } from '@/components/Faucet';
+import { Faucet } from '@/component/Faucet';
 
 const inter = Inter({ subsets: ['latin'] })
 
