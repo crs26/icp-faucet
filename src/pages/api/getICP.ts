@@ -30,6 +30,14 @@ export default async function handler(
             console.error(error)
             res.status(400).send(error as Error)
         }
+    } else if (req.method === 'GET'){
+        try {
+            const {stdout} = await execa('dfx', ['ledger', 'balance', '--network', 'ic'])
+            res.status(201).send(stdout as any)
+        } catch (error) {
+            console.error(error)
+            res.status(400).send(error as Error)
+        }
     } else {
         res.status(400).end()
     }
