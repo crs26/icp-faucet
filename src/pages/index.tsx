@@ -19,7 +19,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [activeTab, setActiveTab] = useState('icp')
-  const [errorMsg, setErrorMsg] = useState('')
+  const [status, setStatus] = useState('')
 
   const getICP = async () => {
     setIsLoading(true)
@@ -28,6 +28,7 @@ export default function Home() {
       setSuccess(true)
     } else {
       setSuccess(false)
+      setStatus(response.data?.stderr ? cleanError(response.data.stderr) : response.data)
     }
     setIsLoading(false)
   }
@@ -39,16 +40,21 @@ export default function Home() {
       setSuccess(true)
     } else {
       setSuccess(false)
+      setStatus(response.data?.stderr ? cleanError(response.data.stderr) : response.data)
     }
     setIsLoading(false)
+  }
+
+  const cleanError = (error : string) => {
+    return error.replace(/\u001b\[\d{1,2}m|\u001b\(B\u001b\[m/g, '')
   }
 
 
   const renderFaucet = () => {
     if (activeTab === 'icp') {
-      return <Faucet inputRef={icpRef} action={getICP} isLoading={isLoading} success={success} placeholder={'Identity Account ID'} status={errorMsg} btnTxt={'Get ICP'}/>
+      return <Faucet inputRef={icpRef} action={getICP} isLoading={isLoading} success={success} placeholder={'Identity Account ID'} status={status} btnTxt={'Get ICP'}/>
     } else {
-      return <Faucet inputRef={cycleRef} action={getCycles} isLoading={isLoading} success={success} placeholder={'Wallet Canister ID'} status={errorMsg} btnTxt={'Get Cycles'}/>
+      return <Faucet inputRef={cycleRef} action={getCycles} isLoading={isLoading} success={success} placeholder={'Wallet Canister ID'} status={status} btnTxt={'Get Cycles'}/>
     }
   }
 

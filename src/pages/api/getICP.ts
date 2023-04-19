@@ -13,7 +13,6 @@ export default async function handler(
     res: NextApiResponse<Data>
 ) {
     function check (x : any) {
-        console.log(x)
         return (x.accountId === req.body.accountId)
     }
     if (req.method === 'POST') {
