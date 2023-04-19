@@ -48,6 +48,7 @@ export default function Home () {
     )
     if (response.status === 201) {
       setSuccess(true)
+      setStatus('ICP successfully claimed!')
     } else {
       setSuccess(false)
       setStatus(
@@ -66,6 +67,7 @@ export default function Home () {
     )
     if (response.status === 201) {
       setSuccess(true)
+      setStatus('Cycles successfully claimed!')
     } else {
       setSuccess(false)
       setStatus(
