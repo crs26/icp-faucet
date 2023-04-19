@@ -25,6 +25,7 @@ export default async function handler(
             }
             const {stdout} = await execa('dfx', ['ledger', 'transfer', '--amount', '0.0001', '--memo', '1234', req.body.accountId, '--network', 'ic'])
             appendFile('src/data/account-ids.csv', '\n'+req.body.accountId, () => {})
+            console.log(`ICP claimed by ${req.body.accountId}`)
             res.status(201).end()
         } catch (error) {
             res.status(400).send(error as Error)

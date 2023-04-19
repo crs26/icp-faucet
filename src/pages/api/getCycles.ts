@@ -29,8 +29,9 @@ export default async function handler(
                 console.log('Already claimed', req.body.wallet);
                 throw `Already claimed ${req.body.wallet}`
             }
-            const {stdout} = await execa('dfx', ['wallet', 'send', req.body.wallet, '1000000000000'])
+            const {stdout} = await execa('dfx', ['wallet', 'send', req.body.wallet, '1000000000000', '--network', 'ic'])
             appendFile('src/data/wallet-ids.csv', '\n'+req.body.wallet, () => {})
+            console.log(`Cycles claimed by ${req.body.wallet}`)
             res.status(201).end()
         } catch (error) {
             console.log(error)
