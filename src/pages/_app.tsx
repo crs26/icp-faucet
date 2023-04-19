@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Faucet</title>
+        <title>SparkLearn EdTech ICP & Cycles Faucet</title>
       </Head>
       <Component {...pageProps}/>
     </>
