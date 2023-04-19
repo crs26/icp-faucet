@@ -68,7 +68,7 @@ export default function Home () {
     setIsLoading(false)
   }
 
-  const cleanError = (error : string) => {
+  const cleanError = (error: string) => {
     try {
       return error.replace(/\u001b\[\d{1,2}m|\u001b\(B\u001b\[m/g, '')
     } catch (error) {
@@ -155,6 +155,12 @@ export default function Home () {
           </div>
           <div className='row d-flex justify-content-center mb-2'>
             <div className='col-10'>{renderFaucet()}</div>
+          </div>
+          <div className='text-center'>
+            <i>For official DFINITY cycles faucet, visit </i>
+            <a href='https://faucet.dfinity.org/' target='_blank'>
+              https://faucet.dfinity.org
+            </a>
           </div>
         </div>
         <div className='card-footer d-flex justify-content-center'>
