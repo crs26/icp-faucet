@@ -24,7 +24,7 @@ export const Faucet: React.FC<FaucetProps> = ({inputRef, action, isLoading, succ
                 aria-describedby="basic-addon2"
                 ref={inputRef}
             />
-            <Button className='col-2' variant="outline-success" id="button-addon2" onClick={() => action()} disabled={isLoading}>
+            <Button className='col-2' variant="outline-primary" id="button-addon2" onClick={() => action()} disabled={isLoading}>
                 {isLoading ? 'Loading' : btnTxt}
             </Button>
             </InputGroup>
