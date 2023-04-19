@@ -60,20 +60,35 @@ export default function Home() {
 
   return (
     <main className="min-h-screen items-center p-24">
-      <div className='row text-center'>
-        <h1>Faucet</h1>
+      <div className='card'>
+        <div className='card-header d-flex justify-content-center'>
+          <Image alt="logo" className="align-self-center" src="/logo.png" height="69" width="80" />
+          <div className='row text-center'>
+            <h1>SparkLearn EdTech Faucet</h1>
+          </div>
+        </div>
+        <div className='card-body'>
+          <div className='row py-5'>
+            <ul className="nav nav-tabs p-0">
+              <li className="nav-item col-6 text-center">
+                <a className={`nav-link ${activeTab === 'icp' ? 'active' : ''}`} href="#" onClick={() => setActiveTab('icp')}>ICP</a>
+              </li>
+              <li className="nav-item col-6 text-center">
+                <a className={`nav-link ${activeTab === 'cycles' ? 'active' : ''}`} href="#" onClick={() => setActiveTab('cycles')}>Cycles</a>
+              </li>
+            </ul>
+          </div>
+          <div className='row d-flex justify-content-center'>
+            <div className='col-10'>
+              {renderFaucet()}
+            </div>
+          </div>
+        </div>
+        <div className='card-footer d-flex justify-content-center'>
+          ©  
+          <a href="https://sparklearn-edtech.com/" target="_blank" rel="noreferrer">SparkLearn EdTech Inc.</a>
+        </div>
       </div>
-      <div className='row py-5'>
-        <ul className="nav nav-tabs">
-          <li className="nav-item col-6 text-center">
-            <a className={`nav-link ${activeTab === 'icp' ? 'active' : ''}`} href="#" onClick={() => setActiveTab('icp')}>ICP</a>
-          </li>
-          <li className="nav-item col-6 text-center">
-            <a className={`nav-link ${activeTab === 'cycles' ? 'active' : ''}`} href="#" onClick={() => setActiveTab('cycles')}>Cycles</a>
-          </li>
-        </ul>
-      </div>
-      {renderFaucet()}
     </main>
   )
 }
