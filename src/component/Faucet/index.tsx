@@ -11,12 +11,16 @@ type FaucetProps = {
     placeholder: string
     status: string
     btnTxt: string
+    balance: string
 }
 
-export const Faucet: React.FC<FaucetProps> = ({inputRef, action, isLoading, success, placeholder, status, btnTxt}) => {
+export const Faucet: React.FC<FaucetProps> = ({inputRef, action, isLoading, success, placeholder, status, btnTxt, balance}) => {
   return (
     <div className='row'>
         <div className='col-12 text-center'>
+            <div className='row d-flex justify-content-center'>
+                Remaining Balance: {balance}
+            </div>
             <InputGroup className="mb-3">
             <Form.Control
                 placeholder={placeholder}

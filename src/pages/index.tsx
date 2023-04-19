@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FormControlProps } from 'react-bootstrap'
 import axios from 'axios'
 import { Faucet } from '@/component/Faucet'
@@ -18,6 +18,19 @@ export default function Home () {
   const [success, setSuccess] = useState(false)
   const [activeTab, setActiveTab] = useState('icp')
   const [status, setStatus] = useState('')
+  const [cyclesBalance, setCyclesBalance] = useState('')
+  const [icpBalance, setIcpBalance] = useState('')
+
+  useEffect(() => {
+    async function fetchBalance(){
+      const cyclesResponse = await axios.get('/api/getCycles')
+      setCyclesBalance(cyclesResponse.data)
+      const icpResponse = await axios.get('/api/getICP')
+      setIcpBalance(icpResponse.data)
+    }
+    fetchBalance();
+  }, [])
+  
 
   const getICP = async () => {
     setIsLoading(true)
@@ -74,6 +87,7 @@ export default function Home () {
           placeholder={'Ledger Account ID'}
           status={status}
           btnTxt={'Get ICP'}
+          balance={icpBalance}
         />
       )
     } else {
@@ -86,6 +100,7 @@ export default function Home () {
           placeholder={'Wallet Canister ID'}
           status={status}
           btnTxt={'Get Cycles'}
+          balance={cyclesBalance}
         />
       )
     }
