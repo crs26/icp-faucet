@@ -27,7 +27,8 @@ export default async function handler(
             console.log(`ICP claimed by ${req.body.accountId}`)
             res.status(201).end()
         } catch (error) {
-            res.status(400).send(error as Error)
+            console.error(error)
+            res.status(400).send({stderr: error} as any)
         }
     } else {
         res.status(400).end()
