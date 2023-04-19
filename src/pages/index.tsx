@@ -142,7 +142,7 @@ export default function Home () {
             <div className='col-10'>{renderFaucet()}</div>
           </div>
           <div className='text-center'>
-            <i>For official ICP cycles faucet, visit </i>
+            <i>For official DFINITY cycles faucet, visit </i>
             <a href='https://faucet.dfinity.org/' target='_blank'>
               https://faucet.dfinity.org
             </a>
