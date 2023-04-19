@@ -55,8 +55,12 @@ export default function Home () {
     setIsLoading(false)
   }
 
-  const cleanError = (error: string) => {
-    return error.replace(/\u001b\[\d{1,2}m|\u001b\(B\u001b\[m/g, '')
+  const cleanError = (error : string) => {
+    try {
+      return error.replace(/\u001b\[\d{1,2}m|\u001b\(B\u001b\[m/g, '')
+    } catch (error) {
+      return ''
+    }
   }
 
   const renderFaucet = () => {
