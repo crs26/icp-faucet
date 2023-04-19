@@ -97,7 +97,7 @@ export default function Home () {
           action={getCycles}
           isLoading={isLoading}
           success={success}
-          placeholder={'Wallet Canister ID'}
+          placeholder={'Canister ID'}
           status={status}
           btnTxt={'Get Cycles'}
           balance={cyclesBalance}
@@ -137,7 +137,7 @@ export default function Home () {
                   href='#'
                   onClick={() => setActiveTab('icp')}
                 >
-                  ICP (default)
+                  ICP
                 </a>
               </li>
               <li className='nav-item col-6 text-center'>
