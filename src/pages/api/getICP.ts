@@ -28,7 +28,7 @@ export default async function handler(
             res.status(201).end()
         } catch (error) {
             console.error(error)
-            res.status(400).send({stderr: error} as any)
+            res.status(400).send(error as Error)
         }
     } else {
         res.status(400).end()
