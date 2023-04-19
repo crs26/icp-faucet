@@ -18,7 +18,7 @@ export const Faucet: React.FC<FaucetProps> = ({inputRef, action, isLoading, succ
   return (
     <div className='row'>
         <div className='col-12 text-center'>
-            <div className='row d-flex justify-content-center'>
+            <div className='row d-flex justify-content-center mb-2'>
                 Remaining Balance: {balance}
             </div>
             <InputGroup className="mb-3">
