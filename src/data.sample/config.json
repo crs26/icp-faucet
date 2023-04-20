@@ -1,0 +1,10 @@
+{
+    "icp" : {
+        "isEnabled" : false,
+        "amount" : 0.0001
+    },
+    "cycles" : {
+        "isEnabled" : false,
+        "amount" : 1000000000
+    }
+}
