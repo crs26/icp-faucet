@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Faucet</title>
+        <title>SparkLearn ICP Faucet</title>
       </Head>
       <Component {...pageProps}/>
     </>
