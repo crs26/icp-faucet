@@ -22,15 +22,22 @@ export default function Home () {
   const [icpBalance, setIcpBalance] = useState('')
 
   useEffect(() => {
-    async function fetchBalance(){
-      const cyclesResponse = await axios.get('/api/getCycles')
-      setCyclesBalance(cyclesResponse.data)
-      const icpResponse = await axios.get('/api/getICP')
-      setIcpBalance(icpResponse.data)
+    async function fetchBalance () {
+      try {
+        const cyclesResponse = await axios.get('/api/getCycles')
+        setCyclesBalance(cyclesResponse.data)
+      } catch (error) {
+        setCyclesBalance('Failed to fetch Cycle balance')
+      }
+      try {
+        const icpResponse = await axios.get('/api/getICP')
+        setIcpBalance(icpResponse.data)
+      } catch (error) {
+        setIcpBalance('Failed to fetch ICP balance')
+      }
     }
-    fetchBalance();
+    fetchBalance()
   }, [])
-  
 
   const getICP = async () => {
     setIsLoading(true)
@@ -41,6 +48,7 @@ export default function Home () {
     )
     if (response.status === 201) {
       setSuccess(true)
+      setStatus('ICP successfully claimed!')
     } else {
       setSuccess(false)
       setStatus(
@@ -59,6 +67,7 @@ export default function Home () {
     )
     if (response.status === 201) {
       setSuccess(true)
+      setStatus('Cycles successfully claimed!')
     } else {
       setSuccess(false)
       setStatus(
@@ -84,7 +93,7 @@ export default function Home () {
           action={getICP}
           isLoading={isLoading}
           success={success}
-          placeholder={'Ledger Account ID'}
+          placeholder={'Account ID'}
           status={status}
           btnTxt={'Get ICP'}
           balance={icpBalance}
@@ -97,7 +106,7 @@ export default function Home () {
           action={getCycles}
           isLoading={isLoading}
           success={success}
-          placeholder={'Wallet Canister ID'}
+          placeholder={'Canister ID'}
           status={status}
           btnTxt={'Get Cycles'}
           balance={cyclesBalance}
@@ -137,7 +146,7 @@ export default function Home () {
                   href='#'
                   onClick={() => setActiveTab('icp')}
                 >
-                  ICP (default)
+                  ICP
                 </a>
               </li>
               <li className='nav-item col-6 text-center'>
