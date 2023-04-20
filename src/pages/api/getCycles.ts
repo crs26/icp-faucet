@@ -3,15 +3,11 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import {execa} from 'execa'
 
 import csv from 'csvtojson'
-import { appendFile } from 'fs'
+import { appendFile, readFileSync } from 'fs'
 
 type Data = {
   name: string
 }
-
-let list : any = []
-
-
 
 export default async function handler(
     req: NextApiRequest,
@@ -23,13 +19,15 @@ export default async function handler(
 
     if (req.method === 'POST') {
         try {
-            list = []
+            const jsonString = readFileSync('src/data/config.json', 'utf8');
+            const config = JSON.parse(jsonString);
+            if(!config.cycles.isEnabled) throw 'Claiming of Cycles is disabled'
             const jsonArray = await csv().fromFile('src/data/wallet-ids.csv')
             if(jsonArray.filter(check).length > 0) {
                 console.log('Already claimed', req.body.wallet);
                 throw `Already claimed ${req.body.wallet}`
             }
-            const {stdout} = await execa('dfx', ['wallet', 'send', req.body.wallet, '1000000000000', '--network', 'ic'])
+            const {stdout} = await execa('dfx', ['wallet', 'send', req.body.wallet, config.cycles.amount, '--network', 'ic'])
             appendFile('src/data/wallet-ids.csv', '\n'+req.body.wallet, () => {})
             console.log(`Cycles claimed by ${req.body.wallet}`)
             res.status(201).end()

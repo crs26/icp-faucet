@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {execa} from 'execa';
 import csv from 'csvtojson'
-import { appendFile } from 'fs'
+import { appendFile, readFileSync } from 'fs'
 
 type Data = {
   name: string
@@ -17,12 +17,15 @@ export default async function handler(
     }
     if (req.method === 'POST') {
         try {
+            const jsonString = readFileSync('src/data/config.json', 'utf8');
+            const config = JSON.parse(jsonString);
+            if(!config.icp.isEnabled) throw 'Claiming of ICP is disabled'
             const jsonArray = await csv().fromFile('src/data/account-ids.csv')
             if(jsonArray.filter(check).length > 0) {
                 console.log('ICP already claimed', req.body.accountId);
                 throw `ICP already claimed ${req.body.accountId}`
             }
-            const {stdout} = await execa('dfx', ['ledger', 'transfer', '--amount', '0.0001', '--memo', '1234', req.body.accountId, '--network', 'ic'])
+            const {stdout} = await execa('dfx', ['ledger', 'transfer', '--amount', config.icp.amount, '--memo', '1234', req.body.accountId, '--network', 'ic'])
             appendFile('src/data/account-ids.csv', '\n'+req.body.accountId, () => {})
             console.log(`ICP claimed by ${req.body.accountId}`)
             res.status(201).end()
