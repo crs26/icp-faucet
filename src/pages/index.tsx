@@ -93,7 +93,7 @@ export default function Home () {
           action={getICP}
           isLoading={isLoading}
           success={success}
-          placeholder={'Ledger Account ID'}
+          placeholder={'Account ID'}
           status={status}
           btnTxt={'Get ICP'}
           balance={icpBalance}
